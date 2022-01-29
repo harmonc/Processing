@@ -2,10 +2,10 @@ import java.util.regex.*;
 import processing.svg.*;
 
 //Name of .osm file that is being turned into a svg and the file that is being created.
-final String MAP = "location";
+final String MAP = "tall test";
 final String saveLocation = "save/test.svg";
 
-float minlat, maxlat, minlon, maxlon;
+float minlat, maxlat, minlon, maxlon, w, h;
 final color BACKGROUND = color(255);
 final color FOREGROUND = color(206, 216, 247);
 
@@ -29,6 +29,8 @@ void setup() {
       maxlat = floatTag("maxlat", line);
       minlon = floatTag("minlon", line);
       maxlon = floatTag("maxlon", line);
+      w = maxlon - minlon;
+      h = maxlat - minlat;
       println("minlat:"+minlat+", maxlat:"+maxlat+
         ", minlon:"+minlon+", maxlon:"+maxlon);
       println("latH:"+(maxlat-minlat));
@@ -42,7 +44,7 @@ void setup() {
       float lat = floatTag("lat", line);
       float lon = floatTag("lon", line);
       String id = stringTag("id", line);
-      PVector p = new PVector(map(lon, minlon, maxlon, 0, width), map(lat, minlat, maxlat, height, 0));
+      PVector p = new PVector(map(lon, minlon, maxlon, 0, width*(w/h)), map(lat, minlat, maxlat, height, 0));
       points.put(id, p);
     } else if (Pattern.matches(".*<way.*", line)) {
       shape.clear();
